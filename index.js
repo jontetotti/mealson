@@ -2,31 +2,31 @@
 
 
 var kraken = require('kraken-js'),
-    // Lägger till denna variabel för att min middleware ska laddas.
+    // Variabel form middleware
     millionsServed = require('./lib/millionsServed'),
     app = {};
 
-//app.configure får data från configuration files i ./config appen. och då app.json
+//app.configure gets its data from ./configuration/app.json if dev and prod is wanted. Create another app-development.json and set the ENV variables accordingly
 app.configure = function configure(nconf, next) {
     // Fired when an app configures itself
     next(null);
 };
 
-// app.requestStart körs innan någon middleWare laddas.
+// app.requestStart is run before middleware is run.
 app.requestStart = function requestStart(server) {
     // Fired at the beginning of an incoming request
     
-    // laddar vår middleware, ligger i ./lib millionsServed.js
+    // runs the middleware millionsServed.js
     server.use(millionsServed());
     
 };
 
-//Körs efter middle ware
+// runs before routing and after middleware
 app.requestBeforeRoute = function requestBeforeRoute(server) {
     // Fired before routing occurs
 };
 
-//sista som händer - final call
+//last thing - final call
 app.requestAfterRoute = function requestAfterRoute(server) {
     // Fired after routing occurs
 };
