@@ -3,9 +3,14 @@
 
 var kraken = require('kraken-js'),
    
+   //variabel for database
     db = require('./lib/database'),
-    // Variabel form middleware
+    
+    // Variabel for middleware
     millionsServed = require('./lib/millionsServed'),
+    
+    //variabel for language
+    language = require('./lib/language'),
     
     app = {};
 
@@ -19,7 +24,7 @@ app.configure = function configure(nconf, next) {
 // app.requestStart is run before middleware is run.
 app.requestStart = function requestStart(server) {
     // Fired at the beginning of an incoming request
-    
+
     // runs the middleware millionsServed.js
     server.use(millionsServed());
     
@@ -28,6 +33,7 @@ app.requestStart = function requestStart(server) {
 // runs before routing and after middleware
 app.requestBeforeRoute = function requestBeforeRoute(server) {
     // Fired before routing occurs
+      server.use(language());
 };
 
 //last thing - final call
